@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kopi Senja</title>
+<meta name="description" content="Kopi Senja, kedai kopi.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='44' fill='%235C3A21'/%3E%3Cg transform='translate(-3,8)' fill='none' stroke='%23F4EBD9' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M24 40 Q50 50 76 40 Q50 30 24 40 Z'/%3E%3Cpath d='M24 40 V48 C24 68 36 76 50 76 C64 76 76 68 76 48 V40'/%3E%3Cpath d='M76 46 C90 46 90 64 72 66'/%3E%3Cpath d='M44 26 C39 18 49 14 44 8'/%3E%3Cpath d='M56 28 C51 20 61 16 56 10'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+  /* ---------- tokens ---------- */
+  :root{
+    --espresso:#241610;
+    --bark-dark:#3A2415;
+    --bark:#5C3A21;
+    --cream:#F4EBD9;
+    --paper:#FBF6EC;
+    --cherry:#A6432E;
+    --cherry-dark:#8A3624;
+    --brass:#C9A15A;
+    --brass-light:#DCC08B;
+    --shadow: 0 18px 40px -20px rgba(36,22,16,.35);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--espresso);
+    font-family:'Work Sans',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;margin:0;padding:0;}
+  button{font:inherit;background:none;border:none;color:inherit;cursor:pointer;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;line-height:1.15;margin:0;}
+  p{margin:0;}
+  em{font-style:italic;}
+
+  body::before{
+    content:"";position:fixed;inset:0;z-index:800;pointer-events:none;opacity:.045;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:4px;}
+
+  .container{width:100%;max-width:1160px;margin-inline:auto;padding-inline:24px;}
+  .section{padding-block:96px;}
+  @media (max-width:768px){.section{padding-block:64px;}}
+
+  .eyebrow{
+    font-family:'Space Mono',monospace;font-weight:700;font-size:.78rem;
+    letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;display:inline-block;
+  }
+  .on-light .eyebrow, .eyebrow--cherry{color:var(--cherry);}
+  .on-dark .eyebrow, .eyebrow--brass{color:var(--brass);}
+
+  .section__head{max-width:620px;margin-bottom:52px;}
+  .section__head h2{font-size:clamp(2rem,3.6vw,2.7rem);}
+  .section__sub{margin-top:14px;font-size:1.02rem;opacity:.8;max-width:46ch;}
+
+  /* buttons */
+  .btn{
+    display:inline-flex;align-items:center;gap:.55rem;padding:.9rem 1.7rem;border-radius:100px;
+    font-family:'Space Mono',monospace;font-weight:700;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;
+    transition:transform .25s ease, background .25s ease, box-shadow .25s ease, border-color .25s ease;
+    white-space:nowrap;
+  }
+  .btn svg{width:16px;height:16px;flex:none;}
+  .btn--cherry{background:var(--cherry);color:var(--paper);}
+  .btn--cherry:hover{background:var(--cherry-dark);transform:translateY(-2px);box-shadow:var(--shadow);}
+  .btn--brass{background:var(--brass);color:var(--espresso);}
+  .btn--brass:hover{background:var(--brass-light);transform:translateY(-2px);box-shadow:var(--shadow);}
+  .btn--ghost{border:1.5px solid rgba(244,235,217,.5);color:var(--cream);}
+  .btn--ghost:hover{background:rgba(244,235,217,.1);transform:translateY(-2px);border-color:var(--cream);}
+  .btn--ghost-dark{border:1.5px solid rgba(36,22,16,.35);color:var(--espresso);}
+  .btn--ghost-dark:hover{background:rgba(36,22,16,.06);transform:translateY(-2px);border-color:var(--espresso);}
+  .btn--sm{padding:.6rem 1.15rem;font-size:.72rem;}
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:sticky;top:0;z-index:500;background:rgba(251,246,236,.86);backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(92,58,33,.12);
+  }
+  .nav__inner{display:flex;align-items:center;justify-content:space-between;padding-block:14px;gap:20px;}
+  .nav__brand{display:flex;align-items:center;gap:10px;flex:none;}
+  .nav__brand svg{width:38px;height:38px;}
+  .nav__name{font-family:'Fraunces',serif;font-weight:600;font-size:1.2rem;color:var(--espresso);}
+  .nav__name em{color:var(--cherry);}
+  .nav__links{display:flex;gap:30px;font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;}
+  .nav__links a{padding:6px 2px;border-bottom:1.5px solid transparent;transition:border-color .2s ease,opacity .2s ease;opacity:.75;}
+  .nav__links a:hover{opacity:1;border-color:var(--cherry);}
+  .nav__actions{display:flex;align-items:center;gap:14px;flex:none;}
+  .nav__toggle{display:none;flex-direction:column;gap:5px;padding:6px;flex:none;}
+  .nav__toggle span{width:22px;height:2px;background:var(--espresso);border-radius:2px;transition:transform .25s ease, opacity .25s ease;}
+
+  @media (max-width:880px){
+    .nav__links{
+      position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;
+      background:var(--paper);border-bottom:1px solid rgba(92,58,33,.12);
+      max-height:0;overflow:hidden;transition:max-height .3s ease;
+    }
+    .nav__links.is-open{max-height:320px;}
+    .nav__links a{padding:14px 24px;border-bottom:1px solid rgba(92,58,33,.08);width:100%;}
+    .nav__toggle{display:flex;}
+    .nav.is-open .nav__toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .nav.is-open .nav__toggle span:nth-child(2){opacity:0;}
+    .nav.is-open .nav__toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .nav__actions .btn--sm span.btn-label{display:none;}
+  }
+  @media (max-width:560px){
+    .nav__actions .btn--sm{padding:.6rem .75rem;}
+  }
+
+  /* ---------- hero ---------- */
+  /* .hero{position:relative;background:var(--espresso);color:var(--cream);overflow:hidden;} */
+  .hero{
+  position:relative;color:var(--cream);overflow:hidden;
+  background-image:linear-gradient(rgba(36,22,16,.82),rgba(36,22,16,.82)), url("resource/coffee.jpg");
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+}
+  .hero__inner{position:relative;padding-block:110px 90px;}
+  .hero__content{position:relative;z-index:2;max-width:600px;}
+  .hero__title{font-size:clamp(2.5rem,5.4vw,4.1rem);color:var(--paper);letter-spacing:-.01em;}
+  .hero__title em{color:var(--brass);font-weight:500;}
+  .hero__sub{margin-top:22px;font-size:1.1rem;color:rgba(244,235,217,.82);max-width:44ch;}
+  .hero__cta{display:flex;flex-wrap:wrap;gap:16px;margin-top:34px;}
+  .hero__meta{margin-top:30px;font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--brass);}
+
+  .hero__art{position:absolute;right:-70px;top:50%;transform:translateY(-50%);width:520px;pointer-events:none;z-index:1;opacity:.95;}
+  @media (max-width:1080px){.hero__art{width:400px;right:-110px;opacity:.5;}}
+  @media (max-width:640px){.hero__art{width:270px;right:-90px;top:38%;opacity:.28;}}
+
+  /* marquee */
+  .marquee{background:var(--bark-dark);color:var(--brass);overflow:hidden;padding-block:14px;border-top:1px solid rgba(201,161,90,.25);border-bottom:1px solid rgba(201,161,90,.25);}
+  .marquee__track{display:inline-flex;white-space:nowrap;animation:scrollLeft 32s linear infinite;}
+  .marquee__track span{font-family:'Space Mono',monospace;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;padding-inline:18px;}
+  .marquee__track span.sep{color:var(--cherry);opacity:.9;}
+  @keyframes scrollLeft{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- about ---------- */
+  .about__grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:center;}
+  .about__art{background:var(--cream);border-radius:22px;padding:36px;}
+  .about__art svg{width:100%;height:auto;}
+  .about__content p{margin-top:16px;max-width:52ch;opacity:.88;}
+  .about__content p:first-of-type{margin-top:0;}
+  .about__tag{
+    display:inline-block;margin-top:24px;font-family:'Space Mono',monospace;font-size:.75rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--cherry);border:1.5px dashed var(--cherry);
+    padding:6px 14px;border-radius:100px;
+  }
+  @media (max-width:860px){.about__grid{grid-template-columns:1fr;gap:40px;}.about__art{max-width:340px;margin-inline:auto;}}
+
+  /* ---------- menu ---------- */
+  .menu{background:var(--espresso);color:var(--cream);}
+  .menu .section__sub{color:rgba(244,235,217,.72);}
+  .menu__grid{display:grid;grid-template-columns:1fr 1fr;gap:44px 60px;}
+  .menu__cat-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid rgba(201,161,90,.35);}
+  .menu__cat-head svg{width:26px;height:26px;color:var(--brass);flex:none;}
+  .menu__cat-head h3{font-size:1.25rem;color:var(--paper);font-weight:600;}
+  .menu-row{display:flex;align-items:baseline;gap:.5rem;padding-block:9px;}
+  .menu-row .name{font-size:.98rem;color:var(--cream);}
+  .menu-row .dots{flex:1;border-bottom:2px dotted rgba(201,161,90,.55);height:0;transform:translateY(-5px);}
+  .menu-row .price{font-family:'Space Mono',monospace;font-size:.92rem;color:var(--brass);font-weight:700;}
+  .menu__note{margin-top:52px;font-size:.95rem;color:rgba(244,235,217,.75);}
+  .menu__note a{color:var(--brass);border-bottom:1px solid var(--brass);}
+  @media (max-width:720px){.menu__grid{grid-template-columns:1fr;gap:38px;}}
+
+  /* ---------- suasana (vignettes) ---------- */
+  .suasana__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .suasana__card{background:var(--cream);border-radius:20px;padding:32px 28px;position:relative;}
+  .suasana__card svg{width:44px;height:44px;color:var(--cherry);margin-bottom:20px;}
+  .suasana__card h3{font-size:1.3rem;margin-bottom:4px;}
+  .suasana__card .time{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.06em;color:var(--bark);opacity:.7;text-transform:uppercase;margin-bottom:14px;display:block;}
+  .suasana__card p:last-child{opacity:.82;font-size:.96rem;}
+  @media (max-width:860px){.suasana__grid{grid-template-columns:1fr;}}
+
+  /* ---------- testimonials ---------- */
+  .ulasan__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+  .ulasan__card{border-top:2px solid var(--bark);padding-top:24px;}
+  .ulasan__rating{display:flex;gap:5px;margin-bottom:16px;}
+  .ulasan__rating svg{width:16px;height:16px;color:var(--brass);}
+  .ulasan__card blockquote{font-family:'Fraunces',serif;font-size:1.15rem;font-style:italic;line-height:1.5;margin:0;color:var(--espresso);}
+  .ulasan__card figcaption{margin-top:18px;font-family:'Space Mono',monospace;font-size:.8rem;letter-spacing:.03em;}
+  .ulasan__card figcaption span{display:block;opacity:.6;font-size:.75rem;margin-top:3px;text-transform:uppercase;letter-spacing:.06em;}
+  @media (max-width:860px){.ulasan__grid{grid-template-columns:1fr;gap:36px;}}
+
+  /* ---------- lokasi ---------- */
+  .lokasi{background:var(--espresso);color:var(--cream);}
+  .lokasi__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start;}
+  .lokasi__address{margin-top:18px;font-size:1.05rem;color:var(--paper);}
+  .lokasi__hours{margin-top:26px;display:flex;flex-direction:column;gap:8px;font-family:'Space Mono',monospace;font-size:.85rem;}
+  .lokasi__hours div{display:flex;justify-content:space-between;max-width:320px;border-bottom:1px dotted rgba(201,161,90,.3);padding-bottom:6px;}
+  .lokasi__hours span:first-child{color:rgba(244,235,217,.65);}
+  .lokasi__hours span:last-child{color:var(--brass);}
+  .lokasi__phone{margin-top:22px;font-family:'Space Mono',monospace;font-size:.92rem;color:var(--brass);}
+  .lokasi__cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px;}
+  .lokasi__map{border-radius:20px;overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(201,161,90,.25);}
+  .lokasi__map iframe{width:100%;height:340px;border:0;filter:grayscale(.15) contrast(1.02);}
+  .lokasi__map-note{padding:12px 18px;font-size:.78rem;color:rgba(244,235,217,.55);background:var(--bark-dark);}
+  @media (max-width:900px){.lokasi__grid{grid-template-columns:1fr;gap:36px;}}
+
+  /* ---------- footer ---------- */
+  .footer{background:#1B110C;color:rgba(244,235,217,.75);padding-block:64px 28px;}
+  .footer__inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:40px;padding-bottom:44px;border-bottom:1px solid rgba(244,235,217,.12);}
+  .footer__brand{display:flex;flex-direction:column;gap:14px;max-width:280px;}
+  .footer__brand-top{display:flex;align-items:center;gap:10px;}
+  .footer__brand-top svg{width:34px;height:34px;}
+  .footer__brand-top span{font-family:'Fraunces',serif;font-size:1.15rem;color:var(--paper);}
+  .footer__brand-top span em{color:var(--brass);}
+  .footer__brand p{font-size:.9rem;opacity:.8;}
+  .footer__links{display:flex;flex-direction:column;gap:12px;font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;}
+  .footer__links a{opacity:.75;transition:opacity .2s ease;}
+  .footer__links a:hover{opacity:1;color:var(--brass);}
+  .footer__social{display:flex;flex-direction:column;gap:12px;font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;}
+  .footer__social a{opacity:.75;}
+  .footer__social a:hover{opacity:1;color:var(--brass);}
+  .footer__bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;padding-top:24px;font-size:.78rem;opacity:.55;}
+
+  /* floating WA */
+  .floating-wa{
+    position:fixed;right:22px;bottom:22px;z-index:600;width:58px;height:58px;border-radius:50%;
+    background:var(--cherry);color:var(--paper);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 12px 28px -8px rgba(166,67,46,.55);transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .floating-wa svg{width:26px;height:26px;}
+  .floating-wa:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 16px 34px -8px rgba(166,67,46,.65);}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.is-visible{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .marquee__track{animation:none;}
+    .btn,.floating-wa{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="container nav__inner">
+    <a href="#top" class="nav__brand" aria-label="Kopi Senja — beranda">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="44" fill="#5C3A21"/>
+        <g transform="translate(-3,8)" fill="none" stroke="#F4EBD9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M24 40 Q50 50 76 40 Q50 30 24 40 Z"/>
+          <path d="M24 40 V48 C24 68 36 76 50 76 C64 76 76 68 76 48 V40"/>
+          <path d="M76 46 C90 46 90 64 72 66"/>
+          <path d="M44 26 C39 18 49 14 44 8"/>
+          <path d="M56 28 C51 20 61 16 56 10"/>
+        </g>
+      </svg>
+      <span class="nav__name">Kopi <em>Senja</em></span>
+    </a>
+
+    <nav class="nav__links" id="navLinks">
+      <a href="#tentang">Tentang</a>
+      <a href="#menu">Menu unggulan</a>
+      <a href="#suasana">Suasana</a>
+      <a href="#ulasan">Ulasan</a>
+      <a href="#lokasi">Lokasi</a>
+    </nav>
+
+    <div class="nav__actions">
+      <a class="btn btn--cherry btn--sm" href="https://wa.me/62887436234143?text=Halo%20Kopi%20Senja!%20Saya%20mau%20tanya-tanya%20soal%20menu%20ya." target="_blank" rel="noopener">
+        <img src="resource\whatsapp.png" alt="whatsapp" style="width:15px;height:15px;">
+        <span class="btn-label">Chat WhatsApp</span>
+      </a>
+      <button class="nav__toggle" id="navToggle" aria-label="Buka menu navigasi" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <p class="eyebrow eyebrow--brass">Kedai Kopi</p>
+      <h1 class="hero__title">Kopi yang bikin kamu <em>betah duduk lebih lama.</em></h1>
+      <p class="hero__sub">Kami seduh kopi lokal untuk kamu pecinta yang kopi.</p>
+      <div class="hero__cta">
+        <a class="btn btn--cherry" href="https://wa.me/62887436234143?text=Halo%20Kopi%20Senja!%20Saya%20mau%20pesan%20ya." target="_blank" rel="noopener">
+          <img src="resource\whatsapp.png" alt="whatsapp" style="width:15px;height:15px;">
+          Pesan via WhatsApp
+        </a>
+        <a class="btn btn--ghost" href="#menu">Lihat Menu</a>
+      </div>
+      <p class="hero__meta">Buka setiap hari · 08.00–23.00 WIB</p>
+    </div>
+  </div>
+
+  <svg class="hero__art" viewBox="0 0 480 480" aria-hidden="true">
+    <circle cx="240" cy="240" r="196" fill="none" stroke="#C9A15A" stroke-width="1" opacity=".3"/>
+    <circle cx="240" cy="240" r="150" fill="none" stroke="#F4EBD9" stroke-width="1" opacity=".18"/>
+    <g transform="translate(40,32) scale(4)">
+      <g transform="translate(-3,8)" fill="none" stroke="#F4EBD9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <path vector-effect="non-scaling-stroke" d="M24 40 Q50 50 76 40 Q50 30 24 40 Z"/>
+        <path vector-effect="non-scaling-stroke" d="M24 40 V48 C24 68 36 76 50 76 C64 76 76 68 76 48 V40"/>
+        <path vector-effect="non-scaling-stroke" d="M76 46 C90 46 90 64 72 66"/>
+        <path vector-effect="non-scaling-stroke" d="M44 26 C39 18 49 14 44 8"/>
+        <path vector-effect="non-scaling-stroke" d="M56 28 C51 20 61 16 56 10"/>
+      </g>
+    </g>
+    <ellipse cx="70" cy="410" rx="11" ry="6.5" fill="#C9A15A" opacity=".45" transform="rotate(-24 70 410)"/>
+    <ellipse cx="100" cy="425" rx="9" ry="5.5" fill="#F4EBD9" opacity=".3" transform="rotate(-10 100 425)"/>
+    <ellipse cx="410" cy="90" rx="10" ry="6" fill="#C9A15A" opacity=".4" transform="rotate(18 410 90)"/>
+  </svg>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Kopi Susu Gula Aren</span><span class="sep">✦</span>
+    <span>Eskrim</span><span class="sep">✦</span>
+    <span>Matcha Latte</span><span class="sep">✦</span>
+    <span>Kopi Senja Signature</span><span class="sep">✦</span>
+    <span>Croissant Butter</span><span class="sep">✦</span>
+    <span>Kopi Susu Gula Aren</span><span class="sep">✦</span>
+    <span>Vietnam Drip</span><span class="sep">✦</span>
+    <span>Matcha Latte</span><span class="sep">✦</span>
+    <span>Kopi Senja Signature</span><span class="sep">✦</span>
+    <span>Croissant Butter</span><span class="sep">✦</span>
+  </div>
+</div>
+
+<!-- ============ TENTANG ============ -->
+<section class="about section on-light" id="tentang">
+  <div class="container about__grid">
+    <div >
+        <img src="resource/latte.webp" alt="Latte art Kopi Senja" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="about__content reveal">
+      <p class="eyebrow eyebrow--cherry">Tentang Kami</p>
+      <h2>Dari dapur rumah ke seluruh Indonesia</h2>
+      <p>Kopi Senja mulai dari dapur rumah biasa. Sekarang Kopi Senja jadi kedai online. Resepnya masih sama — kopi lokal, susu asli, gula yang nggak kemanisan. Yang beda cuma sekarang ada website buat kamu yang mau minum dirumah.</p>
+      <span class="about__tag">Sejak 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MENU ============ -->
+<section class="menu section" id="menu">
+  <div class="container">
+    <div class="section__head reveal">
+      <p class="eyebrow eyebrow--brass">Di Atas Meja</p>
+      <h2>Menu Hari Ini</h2>
+      <p class="section__sub">Harga belum termasuk pajak.</p>
+    </div>
+
+    <div class="menu__grid">
+      <div class="menu__cat reveal">
+        <div class="menu__cat-head">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16"/><path d="M31 18 C37 18 37 26 30 27"/></svg>
+          <h3>Kopi &amp; minuman</h3>
+        </div>
+        <div class="menu-row"><span class="name">Kopi Susu Gula Aren</span><span class="dots"></span><span class="price">18.000</span></div>
+        <div class="menu-row"><span class="name">Kopi Senja Signature</span><span class="dots"></span><span class="price">22.000</span></div>
+        <div class="menu-row"><span class="name">Matcha Late</span><span class="dots"></span><span class="price">19.000</span></div>
+      </div>
+
+      <div class="menu__cat reveal">
+        <div class="menu__cat-head">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 23 C8 14 14 8 20 10 C26 8 32 14 32 23 C26 20 14 20 8 23 Z"/></svg>
+          <h3>Kudapan</h3>
+        </div>
+        <div class="menu-row"><span class="name">Croissant Butter</span><span class="dots"></span><span class="price">15.000</span></div>
+        <div class="menu-row"><span class="name">Eskrim</span><span class="dots"></span><span class="price">17.000</span></div>
+      </div>
+    </div>
+
+    <p class="menu__note reveal">Menu lengkap &amp; promo harian ada di <a href="https://wa.me/62887436234143?text=Halo%20Kopi%20Senja%2C%20boleh%20minta%20menu%20lengkapnya%3F" target="_blank" rel="noopener">WhatsApp kami</a>.</p>
+  </div>
+</section>
+
+<!-- ============ SEPANJANG HARI ============ -->
+<section class="suasana section on-light" id="suasana">
+  <div class="container">
+    <div class="section__head reveal">
+      <p class="eyebrow eyebrow--cherry">Nongkrong</p>
+      <h2>Sepanjang Hari di Kopi Senja</h2>
+      <p class="section__sub">Suasananya berubah, kopinya tetap jadi alasan buat singgah.</p>
+    </div>
+    <div class="suasana__grid">
+      <div class="suasana__card reveal">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 26 H34"/><path d="M11 26 C11 20 15 16 20 16 C25 16 29 20 29 26"/><path d="M20 10 V13"/><path d="M9 15 L11 17"/><path d="M31 15 L29 17"/></svg>
+        <h3>Pagi</h3>
+        <span class="time">06.00 – 10.00</span>
+        <p>Mulai pagi dengan secangkir Kopi.</p>
+      </div>
+      <div class="suasana__card reveal">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="20" cy="20" r="8"/><path d="M20 4 V8 M20 32 V36 M4 20 H8 M32 20 H36 M8.5 8.5 L11.3 11.3 M28.7 28.7 L31.5 31.5 M31.5 8.5 L28.7 11.3 M11.3 28.7 L8.5 31.5"/></svg>
+        <h3>Siang</h3>
+        <span class="time">11.00 – 16.00</span>
+        <p>Dinginkan hari yang panas dengan sesendok Eskrim.</p>
+      </div>
+      <div class="suasana__card reveal">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M27 12 C27 20 21 26 13 26 C15.5 32 22 35 28 33 C34 31 37.5 24.5 35.5 18 C33.5 12 29.5 10 27 12 Z"/></svg>
+        <h3>Senja</h3>
+        <span class="time">17.00 – 23.00</span>
+        <p>Pulang kerja enaknya nyemil.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ULASAN ============ -->
+<section class="ulasan section on-light" id="ulasan">
+  <div class="container">
+    <div class="section__head reveal">
+      <p class="eyebrow eyebrow--cherry">Kata Mereka</p>
+      <h2>Yang Mampir Bilang Begini</h2>
+    </div>
+    <div class="ulasan__grid">
+      <figure class="ulasan__card reveal">
+        <div class="ulasan__rating" aria-label="5 dari 5 cangkir">
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+        </div>
+        <blockquote>“Tempat favorit buat kerja santai, wifi lancar, kopi susu gula arennya juara.”</blockquote>
+        <figcaption>Dinda A.<span>Pekerja Lepas</span></figcaption>
+      </figure>
+
+      <figure class="ulasan__card reveal">
+        <div class="ulasan__rating" aria-label="5 dari 5 cangkir">
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+        </div>
+        <blockquote>“Baristanya ramah, meja luar adem banget buat nongkrong sore.”</blockquote>
+        <figcaption>Fajar R.<span>Mahasiswa</span></figcaption>
+      </figure>
+
+      <figure class="ulasan__card reveal">
+        <div class="ulasan__rating" aria-label="5 dari 5 cangkir">
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+          <svg viewBox="0 0 40 40" fill="currentColor"><path d="M9 16 Q20 21 31 16 Q20 11 9 16 Z"/><path d="M9 16 V20 C9 28 14 31 20 31 C26 31 31 28 31 20 V16 Z"/></svg>
+        </div>
+        <blockquote>“Matcha Late di sini salah satu yang terenak yang pernah saya coba.”</blockquote>
+        <figcaption>Yusuf P.<span>Karyawan Swasta</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOKASI ============ -->
+<section class="lokasi section" id="lokasi">
+  <div class="container lokasi__grid">
+    <div class="lokasi__content reveal">
+      <p class="eyebrow eyebrow--brass">Mampir, Yuk</p>
+      <h2>Kami Ada di Sini</h2>
+      <p class="lokasi__address">Danda Jaya RT 1, Rantau badauh<br>Barito kuala, Kalimantan selatan</p>
+
+      <div class="lokasi__hours">
+        <div><span>Senin – Jumat</span><span>08.00 – 22.00</span></div>
+        <div><span>Sabtu – Minggu</span><span>09.00 – 23.00</span></div>
+      </div>
+
+      <p class="lokasi__phone">+62 812-3456-7890</p>
+
+      <div class="lokasi__cta">
+        <a class="btn btn--brass" href="https://www.google.com/maps/search/?api=1&query=Danda+Jaya+RT.+1,+Rantau+Badauh,+Barito+Kuala+Kalimantan+Selatan" target="_blank" rel="noopener">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 36 C20 36 32 25 32 16 C32 9 26.6 4 20 4 C13.4 4 8 9 8 16 C8 25 20 36 20 36 Z"/><circle cx="20" cy="16" r="5"/></svg>
+          Buka di Google Maps
+        </a>
+        <a class="btn btn--ghost" href="https://wa.me/62887436234143?text=Halo%20Kopi%20Senja!%20Saya%20mau%20tanya%20soal%20lokasi." target="_blank" rel="noopener"><img src="resource\whatsapp.png" alt="whatsapp" style="width:15px;height:15px;"> Chat via WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="lokasi__map reveal">
+      <iframe src="https://www.google.com/maps?q=Danda+Jaya+RT.+1,+Rantau+Badauh,+Barito+Kuala+Kalimantan+Selatan&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Peta lokasi Kopi Senja"></iframe>
+      <p class="lokasi__map-note">*Alamat &amp; peta contoh untuk keperluan demo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <div class="footer__brand-top">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="44" fill="#5C3A21"/>
+          <g transform="translate(-3,8)" fill="none" stroke="#F4EBD9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M24 40 Q50 50 76 40 Q50 30 24 40 Z"/>
+            <path d="M24 40 V48 C24 68 36 76 50 76 C64 76 76 68 76 48 V40"/>
+            <path d="M76 46 C90 46 90 64 72 66"/>
+            <path d="M44 26 C39 18 49 14 44 8"/>
+            <path d="M56 28 C51 20 61 16 56 10"/>
+          </g>
+        </svg>
+        <span>Kopi <em>Senja</em></span>
+      </div>
+      <p>Nikmati harimu disini.</p>
+    </div>
+
+    <nav class="footer__links">
+      <a href="#tentang">Tentang</a>
+      <a href="#menu">Menu</a>
+      <a href="#suasana">Sepanjang Hari</a>
+      <a href="#ulasan">Ulasan</a>
+      <a href="#lokasi">Lokasi</a>
+    </nav>
+
+    <div class="footer__social">
+      <a href="#" target="_blank" rel="noopener">Instagram — @kopisenja.bdg</a>
+      <a href="https://wa.me/62887436234143" target="_blank" rel="noopener">WhatsApp — +62 887-4362-34143</a>
+    </div>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>© 2026 Kopi Senja. Semua hak cipta dilindungi.</p>
+    <p>Dibuat dengan secangkir kopi dan sedikit sore-sore.</p>
+  </div>
+</footer>
+
+<a class="floating-wa" href="https://wa.me/62887436234143?text=Halo%20Kopi%20Senja!%20Saya%20mau%20tanya%20ya." target="_blank" rel="noopener" aria-label="Chat via WhatsApp">
+  <img src="resource\whatsapp.png" alt="whatsapp" style="width:30px;height:30px;">
+</a>
+
+<script>
+  // mobile nav toggle
+  const nav = document.getElementById('nav');
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('is-open');
+    navLinks.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('is-open');
+      navLinks.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // scroll reveal
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+  }
+</script>
+</body>
+</html>
